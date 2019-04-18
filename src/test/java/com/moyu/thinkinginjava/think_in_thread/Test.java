@@ -9,13 +9,7 @@ import java.util.List;
 */
 public class Test {
     public static void main(String[] args) {
-        Date date = new Date();
-        List<Date> ds = test(date);
-
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        for (Date d : ds) {
-            System.out.print("'"+sdf.format(d)+"',");
-        }
+        System.out.println(getCurrentIntergerDateTime(5));
     }
 
     static List<Date> test(Date date) {
@@ -54,5 +48,22 @@ public class Test {
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
         return c.getTime();
+    }
+
+
+    public static String getCurrentIntergerDateTime(int times){
+
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:00");
+        Date date=new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.MINUTE, (int) -(90000/60000));
+        calendar.add(Calendar.SECOND, (int) -(90000%60000)/1000);
+        System.out.println(sdf.format(calendar.getTime()));
+        int minute=calendar.get(Calendar.MINUTE);
+        minute=(minute/times)*times;
+        calendar.set(Calendar.MINUTE,minute);
+        date=calendar.getTime();
+        return sdf.format(date);
     }
 }

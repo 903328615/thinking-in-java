@@ -11,54 +11,42 @@ package com.moyu.leetcode;
  * @create: 2019-03-22 17:45
  **/
 public class LongestPalindromicSubstring {
-    public String longestPalindrome(String s) {
-        String result=s.substring(0,0);
-        for (int i=0;i<s.length();i++){
-            int num=s.length();
-            for (int j=i;j<s.length();j++){
-                if (palindrome(s.substring(i,num))){
-                    if ((num-j)>result.length()){
-                        result=s.substring(i,num);
-                    }
-                }
-                num--;
-            }
+    public static String longestPalindrome(String s) {
+        if (s.isEmpty()){
+            return "";
         }
-        return result;
+        if (s.length()==1){
+            return s;
+        }
+        int start=0,end=0;
+
+        for (int i=0;i<s.length()-1;i++){
+            int len1=expandAroundCenter(s,i,i);
+            int len2=expandAroundCenter(s,i,i+1);
+            int len=Math.max(len1,len2);
+            if (len>end-start){
+                start=i-(len-1)/2;
+                end=i+len/2+1;
+            }
+
+        }
+
+        return s.substring(start,end);
     }
 
-    public boolean palindrome(String s){
-        if (s.length()==1){
-            return true;
+    private static int expandAroundCenter(String s, int left, int right) {
+        int L=left,R=right;
+        while(L>=0&&R<s.length()&&s.charAt(L)==s.charAt(R)){
+            L--;
+            R++;
         }
-        if (s.length()==2){
-            if (s.charAt(0)==s.charAt(1)){
-                return true;
-            }else {
-
-                return false;
-            }
-        }
-        int per=s.length()/2-1;
-        int aft=s.length()/2;
-        if (s.length()%2==1){
-            aft++;
-        }
-        while(true){
-            if (per<0)
-            {
-                break;
-            }
-            if (s.charAt(per--)!=s.charAt(aft++)){
-                return false;
-            }
-
-        }
-        return true;
+        return R-L-1;
     }
 
     public static void main(String[] args) {
-        System.out.println(5/2);
+
+        System.out.println(longestPalindrome("a"));
+        System.out.println("babad".substring(0,3));
     }
 
 }

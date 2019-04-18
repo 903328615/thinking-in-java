@@ -15,6 +15,5 @@ public class LongestPalindromicSubstringTest {
     @Test
     public void palindrome() {
         LongestPalindromicSubstring longestPalindromicSubstring=new LongestPalindromicSubstring();
-        System.out.println(longestPalindromicSubstring.palindrome("babad"));
     }
 }
